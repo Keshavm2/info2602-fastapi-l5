@@ -10,6 +10,7 @@ from fastapi import Depends, HTTPException, status, Request
 import jwt
 from jwt.exceptions import InvalidTokenError
 
+
 SECRET_KEY = "ThisIsAnExampleOfWhatNotToUseAsTheSecretKeyIRL"
 ALGORITHM = "HS256"
 
