@@ -25,7 +25,7 @@ async def login_action(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token = create_access_token(data={"sub": user.id, "role": user.role},)
+    access_token = create_access_token(data={"sub": str(user.id), "role": user.role},)
 
     max_age = 1 * 24 * 60 * 60 # (1 day converted to secs)
     response = RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
@@ -75,3 +75,10 @@ async def signup_page(request: Request):
         request=request, 
         name="signup.html",
     )
+
+@auth_router.get("/logout")
+def logout(request: Request):
+    response = RedirectResponse(url="/login", status_code=status.HTTP_303_SEE_OTHER)
+    response.delete_cookie("access_token")
+    flash(request, "Logged out successfully")
+    return response
